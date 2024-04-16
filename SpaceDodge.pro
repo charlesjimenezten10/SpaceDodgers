@@ -1,4 +1,5 @@
 QT       += core gui
+QT       += testlib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,7 +13,9 @@ SOURCES += \
     bullet.cpp \
     enemy.cpp \
     game.cpp \
+    health.cpp \
     main.cpp \
+    movementtest.cpp \
     player.cpp \
     stats.cpp
 
@@ -20,6 +23,8 @@ HEADERS += \
     bullet.h \
     enemy.h \
     game.h \
+    health.h \
+    movementtest.h \
     player.h \
     stats.h
 
@@ -32,4 +37,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resources.qrc
+    res.qrc

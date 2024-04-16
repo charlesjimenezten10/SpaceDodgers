@@ -5,52 +5,51 @@
 #include <QDebug>
 #include <QGraphicsItem>
 #include "enemy.h"
-#include "game.h">
+#include "game.h"
+#include "stats.h"
 
 extern Game* game;
 
-Bullet::Bullet(): QObject(), QGraphicsRectItem()
+Bullet::Bullet(): QObject(), QGraphicsPixmapItem()
 {
     // this draws the bullets (thin bullets cuz u dont want it big lol)
-    setRect(0,0, 10, 50);
+    QPixmap bulletPixmap(":/images/laser.png");
+    QPixmap bullet = bulletPixmap.scaled(QSize(50,50));
+    setPixmap(bullet);
+
     QTimer* timerMachineGun = new QTimer(this);
     connect(timerMachineGun, SIGNAL(timeout()), this, SLOT(machineGun()));
-    timerMachineGun->start(50);
-
-    // QTimer * timerRocketLauncher = new QTimer(this);
-
-    // connect(timerRocketLauncher, SIGNAL(timeout()), this, SLOT(rocketLauncher()));
-    // timerRocketLauncher->start(1000);
-    // qDebug() << "Rocket launcher timer started.";
+    timerMachineGun->start(20);
 }
 
 void Bullet::machineGun() {
-    // check if bullet touches an enemy
-    QList<QGraphicsItem *> collision = collidingItems();
+    // check if bullet touches an enemy (IF U SEE THIS, IT TOOK ME AN HOUR TO FIND OUT THAT THERE WAS A METHOD ALREADY BUILT IN)
+    QList<QGraphicsItem *> collisions = collidingItems();
     // qDebug() << collision;
 
     setPos(x(), y()-10);
-    for (int i = 0; i < collision.size(); i++) {
-        // auto* ptr = collision[i]; // ask sir
-        QGraphicsItem* ptr = collision[i];
-        if (typeid(*ptr) == typeid(Enemy)) {
+    for(QGraphicsItem* collision: collisions) {
+        if (typeid(*collision) == typeid(Enemy)) {
             game->stats->increaseScore();
-            qDebug() << "ENEMY HIT";
-            scene() -> removeItem(collision[i]);
+            qDebug("You hit an enemy");
+            scene() -> removeItem(collision);
             scene() -> removeItem(this);
-            delete collision[i];
+            delete collision;
             delete this;
             return;
         }
     }
-    if(pos().y() + rect().height() < 0) {
+    // for (int i = 0; i < collision.size(); i++) {
+    //     // auto* ptr = collision[i]; // ask sir
+    //     QGraphicsItem* ptr = collision[i];
+    // }
+    if(pos().y() + pixmap().height() < 0) {
         scene()->removeItem(this);// scene member function
         delete this;
-        qDebug() << "Bullet deleted";
+        qDebug("Bullet deleted");
     }
 }
 
-void Bullet::rocketLauncher() {
-    setPos(x(), y()-10);
-    // qDebug() << "Rocket launcher bullet moved.";
-}
+// Bullet::~Bullet() {
+//     delete this;
+// }

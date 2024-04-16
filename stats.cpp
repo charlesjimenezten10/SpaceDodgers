@@ -4,15 +4,15 @@
 #include <QFont>
 Stats::Stats(): QGraphicsTextItem() {
     setScore();
-    setDefaultTextColor(Qt::black);
+    setDefaultTextColor(Qt::white);
     setHealth();
     setPlainText("Score " + QString::number(score) + "\n" + "Health " + QString::number(health));
-    setFont(QFont("Times", 30, QFont::Bold));
+    setFont(QFont("Times", 15, QFont::Bold));
 }
 
 void Stats::increaseScore()
 {
-    score++;
+    score+=1000;
     setPlainText("Score " + QString::number(score) + "\n" + "Health " + QString::number(health));
 }
 
@@ -42,7 +42,6 @@ void Stats::setHealth()
 {
     health = 5;
 }
-
 
 
 

@@ -1,13 +1,20 @@
+
+#include <QDialog>
+#include <QVBoxLayout>
+#include <QPushButton>
 #include <QApplication>
 #include <QGraphicsScene>
-#include "player.h" // replaced from <QGraphicsItem> -> myRect is derived from it
+#include <QGraphicsRectItem>
+#include "player.h"
 #include <QGraphicsView>
 #include <QTimer>
 #include <QObject>
-// #include <memory>
 #include "game.h"
 #include "stats.h"
-
+#include <QImage>
+#include <QDebug>
+#include <QPushButton>
+#include <QLabel>
 
 
 Game::Game()
@@ -15,45 +22,75 @@ Game::Game()
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFixedSize(800, 800);
-    scene = new QGraphicsScene();
-    scene->setSceneRect(0,0, 800, 800);
-    setScene(scene);
+    createScene();
+    timer = new QTimer();
 }
 
 void Game::start()
 {
+    setupPlayer();
+    setupStats();
+    setupEnemySpawn();
+    // health = new Health();
+    // scene->addItem(health);
+}
+
+void Game::createScene()
+{
+    scene = new QGraphicsScene();
+    scene->setSceneRect(0,0, 800, 800);
+    setBackgroundBrush(QImage(":/images/background.png"));
+    setScene(scene);
+}
+void Game::setupPlayer() {
     player = new Player();
-    player->setRect(0, 0,100,100);
     player->setFlag(QGraphicsItem::ItemIsFocusable); // allows to focus on item as only one item at a scene can respond to q events
     player->setFocus();
-    player->setPos(width() / 2, height() - (player -> rect().height()) - 10);
+    player->setPos(width() / 2, height() - (player -> pixmap().height()) - 10);
     scene->addItem(player);
-    stats = new Stats();
-    scene->addItem(stats);
-    QTimer* timer = new QTimer();
+}
+
+void Game::setupEnemySpawn() {
     QObject::connect(timer, SIGNAL(timeout()), player, SLOT(spawn())); // timer or player needs to inherit QObject
     timer->start(2000);
 }
 
+void Game::setupStats() {
+    stats = new Stats();
+    scene->addItem(stats);
+}
 
 
+void Game::restart() {
+    scene->clear();
+    start();
+}
 
+void Game::displayRestartOrQuitDialog() {
+    scene->clear();
 
+    dialog = new QDialog();
+    dialog->setWindowTitle("Game Over");
 
+    QVBoxLayout* layout = new QVBoxLayout();
 
+    // Add label
+    QLabel* label = new QLabel("Game Over! Do you want to restart or quit?");
+    layout->addWidget(label);
 
+    // HOPE THIS WORKS TO RESTART OR QUIT !!!!
+    QPushButton* restartButton = new QPushButton("Restart");
+    QPushButton* quitButton = new QPushButton("Quit");
+    layout->addWidget(restartButton);
+    layout->addWidget(quitButton);
 
+    // signal and slots cuz apparently that's the only way
+    connect(restartButton, &QPushButton::clicked, this, &Game::restart);
+    connect(quitButton, &QPushButton::clicked, qApp, &QApplication::quit);
 
+    dialog->setLayout(layout);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->show();
 
+}
 
-// QTimer* timer = new QTimer();
-// int initialInterval = 2000; // Initial interval: 2000 milliseconds
-// timer->start(initialInterval);
-
-// // Create a QTimer to periodically adjust the timer interval
-// QTimer intervalAdjustmentTimer;
-// int decreaseDelay = 5000; // Decrease the interval after 5 seconds
-// intervalAdjustmentTimer.singleShot(decreaseDelay, [=]() {
-//     timer->setInterval(1000); // Decrease to 1000 milliseconds after 5 seconds
-// });
-// QObject::connect(timer, SIGNAL(timeout()), player, SLOT(spawn()));
