@@ -1,20 +1,17 @@
 #include <QApplication>
-// #include <QGraphicsScene>
-// #include "player.h" // replaced from <QGraphicsItem> -> myRect is derived from it
-// #include <QGraphicsView>
-// #include <QTimer>
-// #include <QObject>
-// #include <memory>
 #include "game.h"
-
+#include <QTest>
+#include "playerTest.h"
 
 Game* game;
 
 int main(int argc, char *argv[]){
     QApplication a(argc, argv);
-    game = new Game();
-    game->show();
-    game->start();
+    // game = new Game();
+    // game->show();
+    // game->start();
 
+    PlayerTest playerTest;
+    QTest::qExec(&playerTest, argc,argv);
     return a.exec();
 }

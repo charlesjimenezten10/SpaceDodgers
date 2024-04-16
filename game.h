@@ -14,6 +14,8 @@
 class Game: public QGraphicsView {
 public:
     Game();
+    ~Game();
+    bool hitByEnemy;
     QTimer* timer;
     QGraphicsScene* scene;
     Player* player;

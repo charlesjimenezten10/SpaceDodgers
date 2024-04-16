@@ -34,7 +34,8 @@ void Enemy::move()
 
     for(QGraphicsItem* collision: collisions) {
         if (typeid(*collision) == typeid(Player)) {
-            qDebug("You got hit");
+            // qDebug("You got hit");
+            game->hitByEnemy = true;
             game->displayRestartOrQuitDialog();
             return;
         }
@@ -58,11 +59,11 @@ void Enemy::signalSlotMove(){
 }
 
 QPixmap Enemy::createEnemy() {
-    std::string enemies[2] = {":/images/spaceship.png", ":/images/enemy.png"}; // images of the two enemies to be later on used to randomly select one (code below)
-    qDebug() << enemies[1];
+    QString enemies[2] = {":/images/spaceship.png", ":/images/enemy.png"}; // images of the two enemies to be later on used to randomly select one (code below)
+    // qDebug() << enemies[1];
     int getArrayLength = sizeof(enemies) / sizeof(enemies[0]);
     int randomEnemyIndex = rand() % getArrayLength;
-    QString randomEnemy = QString::fromStdString(enemies[randomEnemyIndex]);
+    QString randomEnemy = enemies[randomEnemyIndex];
     QPixmap enemyPixmap(randomEnemy);
     QPixmap enemy = enemyPixmap.scaled(QSize(100,100));
     qDebug() << "Enemy spawned" << enemy;

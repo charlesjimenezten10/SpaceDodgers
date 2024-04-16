@@ -31,7 +31,7 @@ void Bullet::machineGun() {
     for(QGraphicsItem* collision: collisions) {
         if (typeid(*collision) == typeid(Enemy)) {
             game->stats->increaseScore();
-            qDebug("You hit an enemy");
+            // qDebug("You hit an enemy");
             scene() -> removeItem(collision);
             scene() -> removeItem(this);
             delete collision;
@@ -46,7 +46,7 @@ void Bullet::machineGun() {
     if(pos().y() + pixmap().height() < 0) {
         scene()->removeItem(this);// scene member function
         delete this;
-        qDebug("Bullet deleted");
+        // qDebug("Bullet deleted");
     }
 }
 

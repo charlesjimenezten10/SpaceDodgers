@@ -19,6 +19,7 @@
 
 Game::Game()
 {
+    hitByEnemy = false;
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFixedSize(800, 800);
@@ -62,6 +63,7 @@ void Game::setupStats() {
 
 
 void Game::restart() {
+    dialog->close();
     scene->clear();
     start();
 }
@@ -75,7 +77,17 @@ void Game::displayRestartOrQuitDialog() {
     QVBoxLayout* layout = new QVBoxLayout();
 
     // Add label
-    QLabel* label = new QLabel("Game Over! Do you want to restart or quit?");
+    QString message;
+
+    if (&Game::hitByEnemy) {
+        message = "You got hit by the enemy!";
+    }
+    else {
+        message= "All the enemies went past!";
+    }
+
+    QLabel* label = new QLabel("Game Over!\n" + QString(message) + "\nDo you want to restart or quit?");
+    label->setMargin(5);
     layout->addWidget(label);
 
     // HOPE THIS WORKS TO RESTART OR QUIT !!!!
@@ -91,6 +103,12 @@ void Game::displayRestartOrQuitDialog() {
     dialog->setLayout(layout);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->show();
+}
 
+Game::~Game() {
+    disconnect(timer, SIGNAL(timeout()), player, SLOT(spawn()));
+    delete timer;
+    delete player;
+    delete stats;
 }
 

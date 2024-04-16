@@ -13,6 +13,7 @@ Player::Player(): QGraphicsPixmapItem(){
     setPixmap(playerShip);
     setTransformOriginPoint(50,50); // rotate from the center of the image
     setRotation(180);
+
 }
 
 void Player::keyPressEvent(QKeyEvent* event)

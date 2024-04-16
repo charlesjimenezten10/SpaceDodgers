@@ -2,12 +2,14 @@
 #include <QGraphicsTextItem>
 #include <QString>
 #include <QFont>
-Stats::Stats(): QGraphicsTextItem() {
+
+Stats::Stats() {
     setScore();
     setDefaultTextColor(Qt::white);
-    setHealth();
+    setHealth(3);
     setPlainText("Score " + QString::number(score) + "\n" + "Health " + QString::number(health));
     setFont(QFont("Times", 15, QFont::Bold));
+    setPos(20, 0);
 }
 
 void Stats::increaseScore()
@@ -38,9 +40,9 @@ void Stats::setScore()
     score = 0;
 }
 
-void Stats::setHealth()
+void Stats::setHealth(int x)
 {
-    health = 5;
+    health = x;
 }
 
 

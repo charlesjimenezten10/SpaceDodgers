@@ -4,7 +4,8 @@
 #include <QGraphicsPixmapItem>
 #include <QObject>
 
-class Player: public QObject, public QGraphicsPixmapItem{ // derives the QGraphicsRectItem
+
+class Player: public QObject, public QGraphicsPixmapItem{ // inherits the QObject and QGraphicsPixmapItem
     Q_OBJECT
 public:
     Player();

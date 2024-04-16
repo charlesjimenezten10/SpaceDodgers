@@ -15,8 +15,8 @@ SOURCES += \
     game.cpp \
     health.cpp \
     main.cpp \
-    movementtest.cpp \
     player.cpp \
+    playerTest.cpp \
     stats.cpp
 
 HEADERS += \
@@ -24,8 +24,8 @@ HEADERS += \
     enemy.h \
     game.h \
     health.h \
-    movementtest.h \
     player.h \
+    playerTest.h \
     stats.h
 
 FORMS += \

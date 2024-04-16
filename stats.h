@@ -9,11 +9,11 @@ public:
     void decreaseHealth();
     int getScore();
     int getHealth();
-private:
     int score;
     int health;
     void setScore();
-    void setHealth();
+    void setHealth(int x);
+private:
 };
 
 #endif // STATS_H
