@@ -12,6 +12,7 @@ extern Game* game;
 
 Enemy::Enemy(qreal sceneHeight, qreal sceneWidth): QObject(), QGraphicsPixmapItem() {
     enemyPosition(sceneWidth, sceneHeight);
+    createEnemy();
     signalSlotMove();
 }
 
@@ -26,7 +27,7 @@ void Enemy::enemyPosition(qreal sceneWidth, qreal sceneHeight){
 
 void Enemy::move()
 {
-    setPos(x(), y()+20);
+    setPos(x(), y()+15);
     // qDebug() << "Ship pos: " << pos().y();
     // qDebug() << "Rect Height: " << scene()->height();
     int healthNum = game->stats->getHealth();
@@ -52,13 +53,13 @@ void Enemy::move()
 }
 
 void Enemy::signalSlotMove(){
-    createEnemy();
     QTimer * timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
     timer ->start(50);
 }
 
-QPixmap Enemy::createEnemy() {
+void Enemy::createEnemy() {
+    qDebug() << "enemy created";
     QString enemies[2] = {":/images/spaceship.png", ":/images/enemy.png"}; // images of the two enemies to be later on used to randomly select one (code below)
     // qDebug() << enemies[1];
     int getArrayLength = sizeof(enemies) / sizeof(enemies[0]);
@@ -66,11 +67,11 @@ QPixmap Enemy::createEnemy() {
     QString randomEnemy = enemies[randomEnemyIndex];
     QPixmap enemyPixmap(randomEnemy);
     QPixmap enemy = enemyPixmap.scaled(QSize(100,100));
-    qDebug() << "Enemy spawned" << enemy;
+    // qDebug() << "Enemy spawned" << enemy;
     setTransformOriginPoint(50,50); // rotate from the center of the image
     setRotation(180);
     setPixmap(enemy);
-    return enemy;
+    // return enemy;
 }
 
 

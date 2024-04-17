@@ -13,19 +13,19 @@ SOURCES += \
     bullet.cpp \
     enemy.cpp \
     game.cpp \
+    gameTest.cpp \
     health.cpp \
     main.cpp \
     player.cpp \
-    playerTest.cpp \
     stats.cpp
 
 HEADERS += \
     bullet.h \
     enemy.h \
     game.h \
+    gameTest.h \
     health.h \
     player.h \
-    playerTest.h \
     stats.h
 
 FORMS += \

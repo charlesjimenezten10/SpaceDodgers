@@ -13,10 +13,10 @@ public:
     // ~Enemy();
 public slots:
     void move();
-public:
+private:
     void signalSlotMove();
     void enemyPosition(qreal sceneWidth, qreal sceneHeight);
-    QPixmap createEnemy();
+    void createEnemy();
 };
 
 #endif // ENEMY_H

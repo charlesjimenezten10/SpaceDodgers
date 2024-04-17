@@ -1,19 +1,16 @@
-#ifndef PLAYERTEST_H
-#define PLAYERTEST_H
+#ifndef GAMETEST_H
+#define GAMETEST_H
 #include <QObject>
 #include <QTest>
 #include "game.h"
 
-class PlayerTest: public QObject
+class GameTest: public QObject
 {
     Q_OBJECT
-// public:
-//     // MovementTest();
+public:
     Game* game;
-//     // QGraphicsScene scene;
-//     // QGraphicsView view;
-
 private slots:
+    void testBulletIsDeletedScene();
     void initTestCase();
     void init();
     void testKeyPressLeft();
@@ -21,5 +18,7 @@ private slots:
     void testKeyPressUp();
     void testKeyPressDown();
     void testSpaceBar();
+    void testEnemySpawn();
+    void testEnemyBulletDeleted();
 };
-#endif // PLAYERTEST_H
+#endif // GAMETEST_H

@@ -1,17 +1,17 @@
 #include <QApplication>
 #include "game.h"
 #include <QTest>
-#include "playerTest.h"
+#include "gameTest.h"
 
 Game* game;
 
 int main(int argc, char *argv[]){
     QApplication a(argc, argv);
-    // game = new Game();
-    // game->show();
-    // game->start();
+    game = new Game();
+    game->show();
+    game->start();
 
-    PlayerTest playerTest;
-    QTest::qExec(&playerTest, argc,argv);
+    // GameTest gameTest;
+    // QTest::qExec(&gameTest, argc,argv);
     return a.exec();
 }

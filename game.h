@@ -10,18 +10,19 @@
 #include <QTimer>
 #include <QDialog>
 #include <QColor>
+#include <QPointer>
 
 class Game: public QGraphicsView {
 public:
     Game();
     ~Game();
     bool hitByEnemy;
-    QTimer* timer;
-    QGraphicsScene* scene;
-    Player* player;
-    Stats* stats;
-    Health* health;
-    Enemy* enemy;
+    QPointer<QTimer> timer;
+    QPointer<QGraphicsScene> scene;
+    QPointer<Player> player;
+    QPointer<Stats>stats;
+    QPointer<Health> health;
+    QPointer<Enemy> enemy;
     QDialog* dialog;
     void start();
     void createScene();

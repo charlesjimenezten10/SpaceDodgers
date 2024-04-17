@@ -13,7 +13,10 @@ public:
     // ~Bullet();
     Stats* stats;
 public slots:
-    void machineGun();
+    void weaponBullet();
+private:
+    void createBullet();
+    void signalAndSlotBulletMovement();
 };
 
 

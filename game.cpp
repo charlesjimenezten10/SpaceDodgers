@@ -74,7 +74,7 @@ void Game::displayRestartOrQuitDialog() {
     dialog = new QDialog();
     dialog->setWindowTitle("Game Over");
 
-    QVBoxLayout* layout = new QVBoxLayout();
+    QPointer<QVBoxLayout> layout = new QVBoxLayout();
 
     // Add label
     QString message;
@@ -91,8 +91,8 @@ void Game::displayRestartOrQuitDialog() {
     layout->addWidget(label);
 
     // HOPE THIS WORKS TO RESTART OR QUIT !!!!
-    QPushButton* restartButton = new QPushButton("Restart");
-    QPushButton* quitButton = new QPushButton("Quit");
+    QPointer<QPushButton>restartButton = new QPushButton("Restart");
+    QPointer<QPushButton> quitButton = new QPushButton("Quit");
     layout->addWidget(restartButton);
     layout->addWidget(quitButton);
 
